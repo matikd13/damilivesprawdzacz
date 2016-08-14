@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Dami</title>
+  <style>
+  body {
+    font-size: 12px;
+    font-family: Arial;
+  }
+  </style>
+  <script src="https://code.jquery.com/jquery-1.11.0.js"></script>
+</head>
+<body>
+ 	<p>Czy dami jest online? <h3> <span id="liveNotification">-</span> </h3>
+</p>
+<form>
+    <input type="button" value="Sprawdz" id="formButton" />
+</form>
+<script>
+$(document).ready(function () {
+    $("#formButton").click(function () {
+        var channel = $("#channelName").val();
+        $.getJSON("http://api.hitbox.tv/media/live/dami10526", function (data) {
+            var mediaIsLive = data.livestream[0].media_is_live;
+            if (mediaIsLive == 1) {
+                return $("#liveNotification").text("Tak! Dami jest online! :)");
+            }
+            return $("#liveNotification").text("Dami nie jest online :(");
+        }).error(function () {
+            $("#liveNotification").text("I'm not sure :(");
+        });
+    });
+});
+</script>
+ 
+</body>
+</html>
